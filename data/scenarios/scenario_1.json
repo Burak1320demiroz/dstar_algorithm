@@ -1,0 +1,54 @@
+{
+    "name": "Urban Navigation Scenario",
+    "description": "City-like environment with buildings and dynamic obstacles",
+    "grid": {
+        "width": 80,
+        "height": 60
+    },
+    "start": [5, 5],
+    "goal": [70, 50],
+    "static_obstacles": [
+        {
+            "type": "rectangle",
+            "x1": 15, "y1": 15, "x2": 25, "y2": 30,
+            "name": "Building 1"
+        },
+        {
+            "type": "rectangle", 
+            "x1": 35, "y1": 10, "x2": 50, "y2": 20,
+            "name": "Building 2"
+        },
+        {
+            "type": "circle",
+            "center_x": 60, "center_y": 35, "radius": 8,
+            "name": "Roundabout"
+        }
+    ],
+    "rough_terrain": [
+        {
+            "x1": 20, "y1": 35, "x2": 30, "y2": 45,
+            "cost": 2.5,
+            "name": "Construction Zone"
+        }
+    ],
+    "dynamic_obstacles": [
+        {
+            "name": "Moving Vehicle",
+            "positions": [
+                {"x1": 40, "y1": 25, "x2": 43, "y2": 28, "time": 0},
+                {"x1": 45, "y1": 27, "x2": 48, "y2": 30, "time": 5},
+                {"x1": 50, "y1": 29, "x2": 53, "y2": 32, "time": 10}
+            ]
+        }
+    ],
+    "vehicle_config": {
+        "wheelbase": 2.8,
+        "max_speed": 8.0,
+        "max_steering_angle": 0.52,
+        "max_acceleration": 2.0
+    },
+    "algorithm_config": {
+        "heuristic_weight": 1.1,
+        "tie_breaking": true
+    }
+}
