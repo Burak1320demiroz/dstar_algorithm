@@ -372,3 +372,4 @@ if __name__ == '__main__':
         print(f"\n🎉 Tüm testler başarılı! ({result.testsRun} test)")
     else:
         print(f"\n❌ {len(result.failures)} test başarısız, {len(result.errors)} hata")
+        print(f"Toplam {result.testsRun} test çalıştırıldı.")

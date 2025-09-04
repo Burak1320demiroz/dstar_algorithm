@@ -67,17 +67,24 @@ class DStarLite:
         return self.heuristic_weight * math.sqrt(dx*dx + dy*dy)
     
     def get_neighbors(self, node: Node) -> List[Node]:
-        """Bir düğümün komşularını getir"""
+        """Bir düğümün komşularını getir (köşe kesmeyi engelle)"""
         neighbors = []
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), 
-                     (0, 1), (1, -1), (1, 0), (1, 1)]
-        
+                      (0, 1), (1, -1), (1, 0), (1, 1)]
+
         for dx, dy in directions:
             nx, ny = node.x + dx, node.y + dy
-            if (0 <= nx < self.width and 0 <= ny < self.height and
-                not self.grid_map.is_obstacle(nx, ny)):
-                neighbors.append(self.get_node(nx, ny))
-        
+            if not (0 <= nx < self.width and 0 <= ny < self.height):
+                continue
+            if self.grid_map.is_obstacle(nx, ny):
+                continue
+            # Diyagonal harekette köşe kesmeyi engelle: her iki ortogonal komşu da geçişe açık olmalı
+            if dx != 0 and dy != 0:
+                if (self.grid_map.is_obstacle(node.x + dx, node.y) or
+                    self.grid_map.is_obstacle(node.x, node.y + dy)):
+                    continue
+            neighbors.append(self.get_node(nx, ny))
+
         return neighbors
     
     def get_cost(self, node1: Node, node2: Node) -> float:

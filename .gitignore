@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+
+# Builds
+build/
+dist/
+
+# Virtual env
+venv/
+.env/
+.venv/
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.pytest_cache/
+.mypy_cache/
+
+# Generated images (isteğe bağlı: yorumlayın veya kaldırın)
+# *.png
+*.gif
+*.mp4
+
+# Logs
+*.log
+
+# Coverage
+.coverage
+htmlcov/

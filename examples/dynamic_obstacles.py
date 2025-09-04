@@ -20,10 +20,20 @@ def simulate_moving_obstacle():
     grid_map.add_obstacle(20, 20, 25, 40)  # Dikey duvar
     grid_map.add_obstacle(40, 10, 60, 15)  # Yatay duvar
     grid_map.add_obstacle(15, 45, 35, 50)  # Blok
-    grid_map.add_random_obstacles(0.08)     # %8 rastgele engel
+    grid_map.add_random_obstacles(0.05)     # %5 rastgele engel (daha ulaşılabilir)
     
     start = (5, 5)
     goal = (70, 50)
+
+    # Başlangıç ve hedefe açık koridor oluştur (L-şekilli güvenli şerit)
+    x1, y1 = start
+    x2, y2 = goal
+    x_min, x_max = min(x1, x2), max(x1, x2)
+    y_min, y_max = min(y1, y2), max(y1, y2)
+    # Yatay şerit
+    grid_map.clear_area(x_min - 1, y1 - 2, x_max + 1, y1 + 2)
+    # Dikey şerit
+    grid_map.clear_area(x2 - 2, min(y1, y2) - 1, x2 + 2, max(y1, y2) + 1)
     
     print(f"Başlangıç: {start}, Hedef: {goal}")
     print(f"Grid boyutu: {grid_map.width}x{grid_map.height}")
@@ -36,10 +46,10 @@ def simulate_moving_obstacle():
     path = planner.plan_path(start, goal)
     
     if not path:
-        print("❌ İlk yol bulunamadı!")
+        print("İlk yol bulunamadı")
         return
     
-    print(f"✅ İlk yol bulundu: {len(path)} adım")
+    print(f"İlk yol bulundu: {len(path)} adım")
     
     # Hareketli engel simülasyonu
     obstacle_positions = [
@@ -88,11 +98,11 @@ def simulate_moving_obstacle():
         planning_times.append(planning_time)
         
         if new_path:
-            print(f"✅ Yeni yol bulundu: {len(new_path)} adım")
-            print(f"⏱️ Yeniden planlama süresi: {planning_time:.4f} saniye")
+            print(f"Yeni yol bulundu: {len(new_path)} adım")
+            print(f"Yeniden planlama süresi: {planning_time:.4f} saniye")
             paths_history.append(new_path.copy())
         else:
-            print("❌ Yeni yol bulunamadı!")
+            print("Yeni yol bulunamadı")
             break
     
     # İstatistikler
@@ -158,7 +168,8 @@ def simulate_moving_obstacle():
         ax2.grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig('dynamic_obstacles_comparison.png', dpi=300, bbox_inches='tight')
+    import os
+    plt.savefig(os.path.join(os.path.dirname(__file__), 'dynamic_obstacles_comparison.png'), dpi=300, bbox_inches='tight')
     print("Karşılaştırma görseli 'dynamic_obstacles_comparison.png' dosyasına kaydedildi.")
     
     # Performance grafiği
@@ -177,10 +188,10 @@ def simulate_moving_obstacle():
         plt.legend()
         
         plt.tight_layout()
-        plt.savefig('replanning_performance.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(os.path.dirname(__file__), 'replanning_performance.png'), dpi=300, bbox_inches='tight')
         print("Performance grafiği 'replanning_performance.png' dosyasına kaydedildi.")
     
-    print("\nDinamik engeller örneği tamamlandı! 🎉")
+    print("\nDinamik engeller örneği tamamlandı")
 
 if __name__ == "__main__":
     simulate_moving_obstacle()

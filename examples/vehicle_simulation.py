@@ -47,10 +47,10 @@ def vehicle_simulation_demo():
     path = planner.plan_path(start, goal)
     
     if not path:
-        print("❌ Yol bulunamadı!")
+        print("Yol bulunamadı")
         return
     
-    print(f"✅ Yol bulundu: {len(path)} nokta")
+    print(f"Yol bulundu: {len(path)} nokta")
     print(f"Yaklaşık yol uzunluğu: {len(path):.1f} metre")
     
     # Araç modeli oluştur
@@ -90,7 +90,7 @@ def vehicle_simulation_demo():
         
         avg_speed = actual_distance / total_time if total_time > 0 else 0
         
-        print(f"✅ Simülasyon tamamlandı!")
+        print(f"Simülasyon tamamlandı")
         print(f"Toplam süre: {total_time:.1f} saniye")
         print(f"Kat edilen mesafe: {actual_distance:.1f} metre")
         print(f"Ortalama hız: {avg_speed:.1f} m/s ({avg_speed*3.6:.1f} km/h)")
@@ -132,7 +132,7 @@ def vehicle_simulation_demo():
         new_path = planner.replan_path(new_start)
         
         if new_path:
-            print(f"✅ Yeni yol bulundu: {len(new_path)} nokta")
+            print(f"Yeni yol bulundu: {len(new_path)} nokta")
             
             # Yeni araç oluştur (şu anki durumdan devam etmek için)
             new_vehicle = AutonomousVehicle(
@@ -149,7 +149,7 @@ def vehicle_simulation_demo():
             
             print(f"Yeni trajektori oluşturuldu: {len(new_trajectory)} adım")
         else:
-            print("❌ Yeni yol bulunamadı!")
+            print("Yeni yol bulunamadı")
             new_path = []
             new_trajectory = []
     else:
@@ -249,14 +249,16 @@ def vehicle_simulation_demo():
         ax4.grid(True, alpha=0.3)
         
         plt.tight_layout()
-        plt.savefig('vehicle_simulation_complete.png', dpi=300, bbox_inches='tight')
+        import os
+        plt.savefig(os.path.join(os.path.dirname(__file__), 'vehicle_simulation_complete.png'), dpi=300, bbox_inches='tight')
         print("Tam simülasyon görseli 'vehicle_simulation_complete.png' dosyasına kaydedildi.")
         
     else:
         # Basit görselleştirme
         fig = plotter.plot_vehicle_trajectory(grid_map, path, trajectory, 
                                             "Otonom Araç Simülasyonu")
-        plotter.save('vehicle_simulation.png')
+        import os
+        plotter.save(os.path.join(os.path.dirname(__file__), 'vehicle_simulation.png'))
         print("Simülasyon görseli 'vehicle_simulation.png' dosyasına kaydedildi.")
     
     # Hız profili
@@ -287,10 +289,11 @@ def vehicle_simulation_demo():
         plt.legend()
         
         plt.tight_layout()
-        plt.savefig('vehicle_control_profile.png', dpi=300, bbox_inches='tight')
+        import os
+        plt.savefig(os.path.join(os.path.dirname(__file__), 'vehicle_control_profile.png'), dpi=300, bbox_inches='tight')
         print("Kontrol profili 'vehicle_control_profile.png' dosyasına kaydedildi.")
     
-    print("\nOtonom araç simülasyonu tamamlandı! 🚗")
+    print("\nOtonom araç simülasyonu tamamlandı")
 
 if __name__ == "__main__":
     vehicle_simulation_demo()

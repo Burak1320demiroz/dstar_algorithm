@@ -39,7 +39,7 @@ def main():
     planning_time = time.time() - start_time
     
     if path:
-        print(f"\n✅ Yol bulundu!")
+        print(f"\nYol bulundu")
         print(f"Yol uzunluğu: {len(path)} adım")
         print(f"Planlama süresi: {planning_time:.3f} saniye")
         print(f"Genişletilen düğüm sayısı: {planner.stats['nodes_expanded']}")
@@ -48,7 +48,7 @@ def main():
         print(f"\nYolun başlangıcı: {path[:3]}")
         print(f"Yolun sonu: {path[-3:]}")
     else:
-        print("\n❌ Yol bulunamadı!")
+        print("\nYol bulunamadı")
         return
     
     # Dinamik engel testi
@@ -102,16 +102,17 @@ def main():
     # Orijinal yol
     fig1 = plotter.plot_path(grid_map, path, start, goal, 
                             "D* Lite - İlk Yol")
-    plotter.save("original_path.png")
+    import os
+    plotter.save(os.path.join(os.path.dirname(__file__), "original_path.png"))
     
     # Yeni yol
     plotter = PathPlotter()  # Yeni plotter
     fig2 = plotter.plot_path(grid_map, new_path, start, goal, 
                             "D* Lite - Yeniden Planlanmış Yol")
-    plotter.save("replanned_path.png")
+    plotter.save(os.path.join(os.path.dirname(__file__), "replanned_path.png"))
     
     print("Görselleştirmeler 'original_path.png' ve 'replanned_path.png' dosyalarına kaydedildi.")
-    print("\nÖrnek tamamlandı! 🎉")
+    print("\nÖrnek tamamlandı")
 
 if __name__ == "__main__":
     main()

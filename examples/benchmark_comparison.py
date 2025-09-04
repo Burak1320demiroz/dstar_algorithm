@@ -95,7 +95,7 @@ def run_benchmark():
     results = []
     
     for scenario in scenarios:
-        print(f"\n📋 Test Senaryosu: {scenario['name']}")
+        print(f"\nTest Senaryosu: {scenario['name']}")
         print("-" * 40)
         
         width, height = scenario['size']
@@ -117,7 +117,7 @@ def run_benchmark():
         print(f"Başlangıç: {start}, Hedef: {goal}")
         
         # A* testi
-        print("\n🔍 A* Algoritması test ediliyor...")
+        print("\nA* Algoritması test ediliyor...")
         astar = AStar(grid_map)
         
         start_time = time.time()
@@ -125,15 +125,15 @@ def run_benchmark():
         astar_time = time.time() - start_time
         
         if astar_path:
-            print(f"✅ A* - Yol bulundu: {len(astar_path)} adım")
-            print(f"⏱️ A* - Süre: {astar_time:.4f} saniye")
-            print(f"🔍 A* - Genişletilen düğüm: {astar.stats['nodes_expanded']}")
+            print(f"A* - Yol bulundu: {len(astar_path)} adım")
+            print(f"A* - Süre: {astar_time:.4f} saniye")
+            print(f"A* - Genişletilen düğüm: {astar.stats['nodes_expanded']}")
         else:
-            print("❌ A* - Yol bulunamadı")
+            print("A* - Yol bulunamadı")
             continue
         
         # D* Lite testi
-        print("\n🌟 D* Lite Algoritması test ediliyor...")
+        print("\nD* Lite Algoritması test ediliyor...")
         dstar = DStarLite(grid_map, heuristic_weight=1.0)
         
         start_time = time.time()
@@ -141,15 +141,15 @@ def run_benchmark():
         dstar_time = time.time() - start_time
         
         if dstar_path:
-            print(f"✅ D* Lite - Yol bulundu: {len(dstar_path)} adım")
-            print(f"⏱️ D* Lite - Süre: {dstar_time:.4f} saniye")
-            print(f"🔍 D* Lite - Genişletilen düğüm: {dstar.stats['nodes_expanded']}")
+            print(f"D* Lite - Yol bulundu: {len(dstar_path)} adım")
+            print(f"D* Lite - Süre: {dstar_time:.4f} saniye")
+            print(f"D* Lite - Genişletilen düğüm: {dstar.stats['nodes_expanded']}")
         else:
-            print("❌ D* Lite - Yol bulunamadı")
+            print("D* Lite - Yol bulunamadı")
             continue
         
         # Dinamik değişiklik testi (sadece D* Lite için)
-        print("\n🔄 Dinamik değişiklik testi...")
+        print("\nDinamik değişiklik testi...")
         
         # Yolun ortasına engel ekle
         if len(dstar_path) > 4:
@@ -177,12 +177,12 @@ def run_benchmark():
             astar_replan_path = astar_replan.plan_path(start, goal)
             astar_replan_time = time.time() - start_time
             
-            print(f"🌟 D* Lite Yeniden Planlama: {dstar_replan_time:.4f} saniye")
-            print(f"🔍 A* Yeniden Planlama: {astar_replan_time:.4f} saniye")
+            print(f"D* Lite Yeniden Planlama: {dstar_replan_time:.4f} saniye")
+            print(f"A* Yeniden Planlama: {astar_replan_time:.4f} saniye")
             
             if dstar_replan_time > 0:
                 speedup = astar_replan_time / dstar_replan_time
-                print(f"🚀 D* Lite Hızlanma Oranı: {speedup:.1f}x")
+                print(f"D* Lite Hızlanma Oranı: {speedup:.1f}x")
         else:
             dstar_replan_time = 0
             astar_replan_time = 0
@@ -204,7 +204,7 @@ def run_benchmark():
             'replan_speedup': speedup
         })
         
-        print(f"\n📊 Bu senaryo için özet:")
+        print(f"\nBu senaryo için özet:")
         print(f"  • İlk Planlama Hız Karşılaştırması: A* {astar_time:.4f}s vs D* {dstar_time:.4f}s")
         print(f"  • Yol Kalitesi: A* {len(astar_path)} vs D* {len(dstar_path)} adım")
         print(f"  • Genişletilen Düğüm: A* {astar.stats['nodes_expanded']} vs D* {dstar.stats['nodes_expanded']}")
@@ -213,7 +213,7 @@ def run_benchmark():
     
     # Sonuç analizi
     print(f"\n" + "=" * 50)
-    print("📊 GENEL SONUÇLAR VE ANALİZ")
+    print("GENEL SONUÇLAR VE ANALİZ")
     print("=" * 50)
     
     if results:
@@ -226,7 +226,7 @@ def run_benchmark():
         if replan_tests > 0:
             avg_speedup = avg_speedup / replan_tests
         
-        print(f"\n🏆 İlk Planlama Performansı:")
+        print(f"\nİlk Planlama Performansı:")
         print(f"  • A* Ortalama: {avg_astar_time:.4f} saniye")
         print(f"  • D* Lite Ortalama: {avg_dstar_time:.4f} saniye")
         
@@ -238,14 +238,14 @@ def run_benchmark():
                 print(f"  • D* Lite {1/initial_ratio:.1f}x daha hızlı (ilk planlama)")
         
         if replan_tests > 0:
-            print(f"\n🔄 Yeniden Planlama Performansı:")
+            print(f"\nYeniden Planlama Performansı:")
             print(f"  • Ortalama D* Lite hızlanma oranı: {avg_speedup:.1f}x")
             print(f"  • D* Lite'ın ana avantajı dinamik ortamlarda!")
     
     # Görselleştirme
     create_benchmark_plots(results)
     
-    print(f"\n🎯 SONUÇ: D* Lite, dinamik ortamlarda ve yeniden planlama")
+    print(f"\nSONUÇ: D* Lite, dinamik ortamlarda ve yeniden planlama")
     print(f"gerektiren uygulamalarda büyük avantaj sağlar!")
     print(f"\nDetaylı grafikler 'benchmark_results.png' dosyasında.")
 
@@ -315,7 +315,8 @@ def create_benchmark_plots(results):
     ax4.grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig('benchmark_results.png', dpi=300, bbox_inches='tight')
+    import os
+    plt.savefig(os.path.join(os.path.dirname(__file__), 'benchmark_results.png'), dpi=300, bbox_inches='tight')
     print("Benchmark grafikleri 'benchmark_results.png' dosyasına kaydedildi.")
 
 if __name__ == "__main__":
